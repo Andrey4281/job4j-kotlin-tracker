@@ -149,6 +149,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-core</artifactId>
+            <version>0.11.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

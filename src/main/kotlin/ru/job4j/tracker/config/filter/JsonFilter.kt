@@ -1,12 +1,16 @@
 package ru.job4j.tracker.config.filter
 
+import org.apache.logging.log4j.LogManager
 import org.springframework.stereotype.Component
 import spark.Request
 import spark.Response
 
 @Component
 class JsonFilter {
-    val handle = fun (res: Request, response: Response) {
+    private val log = LogManager.getLogger(JsonFilter::class.java)
+
+    val handle = fun (_: Request, response: Response) {
+        log.info("JSON FILTER")
         response.type("application/json")
     }
 }

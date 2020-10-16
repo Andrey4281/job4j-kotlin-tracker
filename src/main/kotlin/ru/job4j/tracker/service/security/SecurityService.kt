@@ -1,14 +1,18 @@
 package ru.job4j.tracker.service.security
 
+import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import io.jsonwebtoken.security.SignatureException
 import org.apache.logging.log4j.LogManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import ru.job4j.tracker.repository.UserRepository
+import ru.job4j.tracker.service.security.exception.InvalidJwtException
+import java.lang.IllegalArgumentException
 import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.security.MessageDigest
@@ -54,6 +58,22 @@ class SecurityService(@Autowired private  val userRepository: UserRepository,
                 .setExpiration(Date(System.currentTimeMillis()
                         + jwtTokenValiditySeconds.toInt() * 1000))
                 .compact()
+    }
+
+    fun validateToken(authToken: String): Boolean {
+        try {
+            log.info("Checking token")
+            Jwts
+                    .parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(authToken)
+            return true
+        } catch (e : Exception) {
+            log.error(e.message, e)
+            throw InvalidJwtException("invalid token")
+        }
+        return false
     }
 
     private fun initKey(): Key {
