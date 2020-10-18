@@ -12,25 +12,20 @@ import spark.Response
 class ItemController(@Autowired private val itemRepository: ItemRepository) {
     private val log = LogManager.getLogger(ItemController::class.java)
 
-    val create = fun(request: Request, response: Response): String {
-        log.info("REST request to create item")
+    fun create(request: Request, response: Response): String {
         val item = Gson().fromJson(request.body(), Item::class.java)
         response.status(200)
         return Gson().toJson(itemRepository.create(item), Item::class.java)
     }
 
-    val update = fun(request: Request, response: Response): String {
-        log.info("REST request to update item")
+    fun update(request: Request, response: Response): String {
         val item = Gson().fromJson(request.body(), Item::class.java)
-        log.info("Item.id={}", item.id)
-        log.info("Item.name={}", item.name)
         response.status(200)
         itemRepository.update(item)
         return Gson().toJson(item, Item::class.java)
     }
 
-    val delete = fun(request: Request, response: Response) {
-        log.info("REST request to delete item {}", request.params(":id"))
+    fun delete(request: Request, response: Response) {
         val item = itemRepository.findById(request.params(":id").toInt())
         if (item != null) {
             response.status(204)
@@ -40,21 +35,19 @@ class ItemController(@Autowired private val itemRepository: ItemRepository) {
         }
     }
 
-    val findAll = fun(_: Request, response: Response): String {
-        log.info("REST request to findAll item")
+    fun findAll(request: Request, response: Response): String {
         response.status(200)
         return Gson().toJson(itemRepository.findAll())
     }
 
-    val findById = fun(request: Request, response: Response): String? {
-        log.info("REST request to get by Id {}", request.params(":id").toInt())
+    fun findById(request: Request, response: Response): String? {
         val item = itemRepository.findById(request.params(":id").toInt())
-        if (item != null) {
+        return if (item != null) {
             response.status(200)
-            return Gson().toJson(itemRepository.findById(request.params(":id").toInt()))
+            Gson().toJson(itemRepository.findById(request.params(":id").toInt()))
         } else {
             response.status(404)
-            return null
+            null
         }
     }
 }

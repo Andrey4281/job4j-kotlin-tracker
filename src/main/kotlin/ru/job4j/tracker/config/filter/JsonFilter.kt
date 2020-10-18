@@ -9,7 +9,7 @@ import spark.Response
 class JsonFilter {
     private val log = LogManager.getLogger(JsonFilter::class.java)
 
-    val handle = fun (_: Request, response: Response) {
+    fun handle(request: Request, response: Response) {
         log.info("JSON FILTER")
         response.type("application/json")
     }

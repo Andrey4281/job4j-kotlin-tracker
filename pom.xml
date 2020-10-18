@@ -11,28 +11,11 @@
     <properties>
         <java.version>1.8</java.version>
         <kotlin.version>1.3.41</kotlin.version>
+        <db.url>jdbc:mysql://127.0.0.1:3306/tracker</db.url>
+        <db.driver>com.mysql.cj.jdbc.Driver</db.driver>
+        <db.username>admin</db.username>
+        <db.password>xEmtHgW2</db.password>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>production</id>
-            <properties>
-                <db.url>jdbc:mysql://127.0.0.1:3306/tracker</db.url>
-                <db.driver>com.mysql.cj.jdbc.Driver</db.driver>
-                <db.username>admin</db.username>
-                <db.password>xEmtHgW2</db.password>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <db.url>jdbc:hsqldb:mem:tracker;sql.enforce-size=false</db.url>
-                <db.driver>org.hsqldb.jdbcDriver</db.driver>
-                <db.username>user</db.username>
-                <db.password>user</db.password>
-            </properties>
-        </profile>
-    </profiles>
 
     <dependencies>
         <dependency>
@@ -147,12 +130,6 @@
             <artifactId>kotlin-reflect</artifactId>
             <version>1.4.10</version>
             <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.arrow-kt</groupId>
-            <artifactId>arrow-core</artifactId>
-            <version>0.11.0</version>
         </dependency>
 
     </dependencies>

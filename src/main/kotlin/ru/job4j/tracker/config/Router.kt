@@ -17,21 +17,21 @@ class Router(@Autowired private val itemController: ItemController,
              @Autowired private val exceptionsHandler: ExceptionsHandler) {
     init {
         path("/item") {
-            before("/*", jsonFilter.handle)
-            before("/*", jwtFilter.handle)
-            exception(InvalidJwtException::class.java, exceptionsHandler.handleInvalidToken)
-            post("/create", itemController.create)
-            put("/update", itemController.update)
-            get("/findAll", itemController.findAll)
-            get("/:id", itemController.findById)
+            before("/*", jsonFilter::handle)
+            before("/*", jwtFilter::handle)
+            exception(InvalidJwtException::class.java, exceptionsHandler::handleInvalidToken)
+            post("/create", itemController::create)
+            put("/update", itemController::update)
+            get("/findAll", itemController::findAll)
+            get("/:id", itemController::findById)
         }
         path("/item") {
-            before("/*", jwtFilter.handle)
-            delete("/:id", itemController.delete)
+            before("/*", jwtFilter::handle)
+            delete("/:id", itemController::delete)
         }
         path("/auth") {
-            before("/*", jsonFilter.handle)
-            post("/signIn", authController.auth)
+            before("/*", jsonFilter::handle)
+            post("/signIn", authController::auth)
         }
     }
 }

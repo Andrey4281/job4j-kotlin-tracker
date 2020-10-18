@@ -12,7 +12,7 @@ import spark.Response
 class JwtFilter(@Autowired private val securityService: SecurityService) {
     private val log = LogManager.getLogger(JwtFilter::class.java)
 
-    val handle = fun (request: Request, response: Response) {
+    fun handle(request: Request, response: Response) {
         log.info("JWT filter")
         val header = request.headers("Authorization")
         if (header != null && header.startsWith("Bearer ")) {

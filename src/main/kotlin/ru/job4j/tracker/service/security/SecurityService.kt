@@ -1,11 +1,9 @@
 package ru.job4j.tracker.service.security
 
-import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
-import io.jsonwebtoken.security.SignatureException
 import org.apache.logging.log4j.LogManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -62,7 +60,6 @@ class SecurityService(@Autowired private  val userRepository: UserRepository,
 
     fun validateToken(authToken: String): Boolean {
         try {
-            log.info("Checking token")
             Jwts
                     .parserBuilder()
                     .setSigningKey(key)

@@ -8,7 +8,7 @@ import spark.Response
 
 @Component
 class ExceptionsHandler {
-    val handleInvalidToken = fun (exception: Throwable, _: Request, response: Response) {
+     fun handleInvalidToken(exception: Throwable, request: Request, response: Response) {
         val error = ErrorDTO(401, exception.message)
 
         response.status(401)

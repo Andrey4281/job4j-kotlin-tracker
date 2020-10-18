@@ -13,12 +13,9 @@ import spark.Response
 class AuthController(@Autowired private val securityService: SecurityService) {
     private val log = LogManager.getLogger(AuthController::class.java)
 
-    val auth = fun(request: Request, response: Response): String? {
-        log.info("REST auth request")
+    fun auth(request: Request, response: Response): String? {
         val user = Gson().fromJson(request.body(), UserDTO::class.java)
-        log.info("User {}", user)
         val res = securityService.checkUser(user.login, user.password)
-        log.info("checkUser {}", res)
         return if (res) {
             response.status(200)
             "{\"token\": ${securityService.generateToken(user.login)}}"
