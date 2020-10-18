@@ -13,6 +13,9 @@ class ItemController(@Autowired private val itemRepository: ItemRepository) {
     private val log = LogManager.getLogger(ItemController::class.java)
 
     fun create(request: Request, response: Response): String {
+        log.info("info")
+        log.error("error")
+        log.debug("debug")
         val item = Gson().fromJson(request.body(), Item::class.java)
         response.status(200)
         return Gson().toJson(itemRepository.create(item), Item::class.java)
